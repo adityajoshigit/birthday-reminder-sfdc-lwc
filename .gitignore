@@ -50,3 +50,4 @@ config/
 package.json
 scripts/
 sfdx-project.json
+jest.config.js

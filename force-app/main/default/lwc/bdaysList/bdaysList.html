@@ -1,0 +1,18 @@
+<template>
+    <lightning-card>
+        <template for:each={bdayContacts} for:item="bdayContact">
+            <div key={bdayContact.Id} class="bday-contact-container">
+                <lightning-icon icon-name="action:user" alternative-text="Item">
+                </lightning-icon>
+                <div class="item-details">
+                    <p class="item-header">
+                        {bdayContact.FirstName}
+                    </p>
+                    <p class="item-age">
+                        {bdayContact.Birthday}
+                    </p>
+                </div>
+            </div>
+        </template>
+    </lightning-card>
+</template>

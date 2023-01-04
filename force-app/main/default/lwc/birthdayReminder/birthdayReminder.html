@@ -1,0 +1,37 @@
+<template>
+    <lightning-card title={header}>
+        <!-- <lightning-input onkeyup={handleOnKeyUp}></lightning-input> -->
+        <template if:true={todayBdayContacts.data} >
+            <div 
+                class="slds-p-around_small slds-m-around_small slds-grid slds-wrap bday-list-container"
+            >
+                <template for:each={todayBdayContacts.data} for:item="bdayContact">
+                    <div key={bdayContact.Id} 
+                        class="slds-col slds-size_1-of-2 bday-contact-container"
+                    >
+                        <div
+                            class="slds-m-around_x-small"
+                            style="display: inline-flex;"
+                        >
+                            <lightning-icon 
+                                icon-name={iconName} 
+                                alternative-text="Item"
+                                onmouseover={hideIcon}
+                                onmouseleave={showIcon}
+                            >
+                            </lightning-icon>
+                            <div class="slds-m-around_xx-small item-details">
+                                <p class="item-header">
+                                    {bdayContact.FirstName}
+                                </p>
+                                <p class="item-age">
+                                    {bdayContact.Birthdate}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+    </lightning-card>
+</template>
