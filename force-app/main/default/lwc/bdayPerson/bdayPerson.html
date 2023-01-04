@@ -1,13 +1,21 @@
 <template>
-    <div class="bday-item-container">
-        <lightning-icon icon-name="action:user" alternative-text="Item">
+    <div
+        class="slds-m-around_x-small bday-item-container"
+    >
+        <lightning-icon 
+            icon-name={iconName} 
+            alternative-text="Item"
+            onmouseover={hideIcon}
+            onmouseleave={showIcon}
+            class="contact-img-icon"
+        >
         </lightning-icon>
-        <div class="item-details">
+        <div class="slds-m-around_xx-small item-details">
             <p class="item-header">
-                {displayName}
+                {bdayContact.FirstName}
             </p>
             <p class="item-age">
-                {displayAge}
+                {bdayContact.Birthdate}
             </p>
         </div>
     </div>

@@ -1,0 +1,7 @@
+.contact-img-icon:hover {
+    cursor: pointer;
+}
+
+.bday-item-container {
+    display: inline-flex;
+}
