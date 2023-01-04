@@ -7,6 +7,7 @@ export default class BirthdayReminder extends LightningElement {
     @api baseBirthDate;
     
     @track iconName = 'action:user';
+    @track todayBdayContacts = [];
 
     get header() {
         return (
@@ -15,7 +16,14 @@ export default class BirthdayReminder extends LightningElement {
     }
 
     @wire(getBirthdayContacts, {bdateString: ''})
-    todayBdayContacts;
+    wiredGetBirthdayContacts({error, data}) {
+        if(data) {
+            console.log(data);
+            data.forEach(bdayPerson => {
+                this.todayBdayContacts.push(bdayPerson);
+            });
+        }
+    }
 
     // handleOnKeyUp() {
     //     console.log(this.todayBdayContacts);

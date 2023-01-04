@@ -1,14 +1,18 @@
 <template>
     <lightning-card title={header}>
         <!-- <lightning-input onkeyup={handleOnKeyUp}></lightning-input> -->
-        <template if:true={todayBdayContacts.data} >
+        <template if:false={todayBdayContacts} >
+            No Birthdays Today!
+        </template>
+        <template if:true={todayBdayContacts} >
             <div 
                 class="slds-p-around_small slds-m-around_small slds-grid slds-wrap bday-list-container"
             >
-                <template for:each={todayBdayContacts.data} for:item="bdayContact">
+                <template for:each={todayBdayContacts} for:item="bdayContact">
                     <div key={bdayContact.Id} 
                         class="slds-col slds-size_1-of-2 bday-contact-container"
                     >
+                        <!--
                         <div
                             class="slds-m-around_x-small"
                             style="display: inline-flex;"
@@ -30,6 +34,8 @@
                                 </p>
                             </div>
                         </div>
+                        -->
+                        <c-bday-person bday-individual-record={bdayContact}></c-bday-person>
                     </div>
                 </template>
             </div>

@@ -1,16 +1,18 @@
 import { LightningElement, api } from 'lwc';
 
+const todayDate = new Date();
+
 export default class BdayPerson extends LightningElement {
-    @api contact;
+    @api bdayIndividualRecord;
 
     get displayName() {
         return (
-            this.contact.FirstName + ' ' + this.contact.LastName
+            this.bdayIndividualRecord.FirstName + ' ' + this.bdayIndividualRecord.LastName
         ).trim();
     }
 
     get displayAge() {
-        return this.calculateAge(this.contact.Birthdate) + ' years';
+        return this.calculateAge(new Date(this.bdayIndividualRecord.Birthdate)) + ' years';
     }
 
     calculateAge(birthdate) {
