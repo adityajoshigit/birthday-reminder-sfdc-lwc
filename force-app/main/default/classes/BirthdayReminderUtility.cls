@@ -14,7 +14,8 @@ public with sharing class BirthdayReminderUtility {
             FROM 
                 Contact
             WHERE 
-                Birthdate = :bday
+                DAY_IN_MONTH(Birthdate) = :bday.day()
+                AND CALENDAR_MONTH(Birthdate) = :bday.month() 
             WITH SECURITY_ENFORCED
         ];
     }

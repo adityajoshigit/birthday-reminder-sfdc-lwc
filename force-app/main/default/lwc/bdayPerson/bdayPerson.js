@@ -42,7 +42,7 @@ export default class BdayPerson extends LightningElement {
     }
 
     showIcon() {
-        this.iconName = 'action:user';
+        this.iconName = this.isSelected ? 'action:approval': 'action:user';
     }
 
     hideIcon() {
@@ -55,11 +55,21 @@ export default class BdayPerson extends LightningElement {
             'selection', 
             {
                 detail: {
-                    recordId: this.bdayIndividualRecord.Id,
-                    isSelected: this.isSelected
+                    data: {
+                        recordId: this.bdayIndividualRecord.Id,
+                        isSelected: this.isSelected
+                    }
                 }
             }
         );
         this.dispatchEvent(selectionEvent);
+
+        // let divElem = this.template.querySelector('[data-id="'+ this.bdayIndividualRecord.Id + '"]');
+        
+        // if (this.isSelected) {
+        //     divElem.className = divElem.className + ' selected-styling';
+        // } else {
+        //     divElem.className = divElem.className.replace('selected-styling', '');
+        // }
     }
 }

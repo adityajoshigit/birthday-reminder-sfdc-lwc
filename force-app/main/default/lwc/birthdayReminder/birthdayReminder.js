@@ -9,6 +9,9 @@ export default class BirthdayReminder extends LightningElement {
     @track iconName = 'action:user';
     @track todayBdayContacts = [];
 
+    selectionMap = {};
+    totalBirthdays = 0;
+
     get header() {
         return (
             (!this.baseBirthDate || this.baseBirthDate.getTime() === todayDate.getTime()) ? 'Today\'s Birthdays' : ('Birthdays on ' + baseBirthDate)
@@ -21,7 +24,9 @@ export default class BirthdayReminder extends LightningElement {
             console.log(data);
             data.forEach(bdayPerson => {
                 this.todayBdayContacts.push(bdayPerson);
+                this.selectionMap[bdayPerson.Id] = false;
             });
+            totalBirthdays = data.length;
         }
     }
 
@@ -51,6 +56,15 @@ export default class BirthdayReminder extends LightningElement {
 
     hideIcon() {
         this.iconName = 'action:approval';
+    }
+
+    handleItemSelection(event) {
+        if(event.detail.data) {
+            const recordId = event.detail.data.recordId;
+            const isSelected = event.detail.data.isSelected;
+            this.selectionMap[recordId] = isSelected;
+            console.log(this.selectionMap);
+        }
     }
 
 }

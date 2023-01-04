@@ -1,5 +1,11 @@
 <template>
     <lightning-card title={header}>
+        <div slot="actions">
+            <lightning-badge 
+                label={totalBirthdays}
+                class="slds-badge_inverse"
+            ></lightning-badge>
+        </div>
         <!-- <lightning-input onkeyup={handleOnKeyUp}></lightning-input> -->
         <template if:false={todayBdayContacts} >
             No Birthdays Today!
@@ -12,30 +18,11 @@
                     <div key={bdayContact.Id} 
                         class="slds-col slds-size_1-of-2 bday-contact-container"
                     >
-                        <!--
-                        <div
-                            class="slds-m-around_x-small"
-                            style="display: inline-flex;"
+                        <c-bday-person 
+                            bday-individual-record={bdayContact}
+                            onselection={handleItemSelection}
                         >
-                            <lightning-icon 
-                                icon-name={iconName} 
-                                alternative-text="Item"
-                                onmouseover={hideIcon}
-                                onmouseleave={showIcon}
-                                class="contact-img-icon"
-                            >
-                            </lightning-icon>
-                            <div class="slds-m-around_xx-small item-details">
-                                <p class="item-header">
-                                    {bdayContact.FirstName}
-                                </p>
-                                <p class="item-age">
-                                    {bdayContact.Birthdate}
-                                </p>
-                            </div>
-                        </div>
-                        -->
-                        <c-bday-person bday-individual-record={bdayContact}></c-bday-person>
+                        </c-bday-person>
                     </div>
                 </template>
             </div>

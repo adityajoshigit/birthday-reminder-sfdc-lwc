@@ -1,12 +1,14 @@
 <template>
     <div
-        class="slds-m-around_x-small bday-item-container"
+        data-id={bdayIndividualRecord.Id}
+        class="slds-m-around_xxx-small slds-p-around_xxx-small bday-item-container"
     >
         <lightning-icon 
             icon-name={iconName} 
             alternative-text="Item"
             onmouseover={hideIcon}
             onmouseleave={showIcon}
+            onclick={handleSelection}
             class="contact-img-icon"
         >
         </lightning-icon>

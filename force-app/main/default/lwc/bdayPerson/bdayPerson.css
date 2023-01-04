@@ -5,3 +5,10 @@
 .bday-item-container {
     display: inline-flex;
 }
+
+.selected-styling {
+    border-color: grey;
+    border-width: thin;
+    border-radius: 3%;
+    border-style: solid;
+}
