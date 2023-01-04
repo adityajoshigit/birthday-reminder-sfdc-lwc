@@ -19,9 +19,12 @@ export default class BdayPerson extends LightningElement {
 
     calculateAge(birthdate) {
         let age = 0;
-        
+        console.log(birthdate);
         if (birthdate) {
-            if (birthdate.getTime() === todayDate.getTime()) {
+            if (
+                ( todayDate.getDate() === birthdate.getDate() )
+            &&  ( todayDate.getMonth() === birthdate.getMonth() )
+            ) {
                 return todayDate.getFullYear() - birthdate.getFullYear();
             }
         }
