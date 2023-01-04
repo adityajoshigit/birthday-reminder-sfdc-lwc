@@ -1,9 +1,11 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 
 const todayDate = new Date();
 
 export default class BdayPerson extends LightningElement {
     @api bdayIndividualRecord;
+
+    @track iconName = 'action:user';
 
     get displayName() {
         return (
