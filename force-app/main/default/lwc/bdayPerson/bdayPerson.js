@@ -7,6 +7,8 @@ export default class BdayPerson extends LightningElement {
 
     @track iconName = 'action:user';
 
+    isSelected = false;
+
     get displayName() {
         return (
             this.bdayIndividualRecord.FirstName + ' ' + this.bdayIndividualRecord.LastName
@@ -17,12 +19,9 @@ export default class BdayPerson extends LightningElement {
         if (this.bdayIndividualRecord) {
             let parts = this.bdayIndividualRecord.Birthdate.split('-');
             let bdate = new Date();
-            console.log(parts);
-            console.log(bdate);
             bdate.setDate(parseInt(parts[2]));
             bdate.setMonth(parseInt(parts[1])-1);
             bdate.setFullYear(parseInt(parts[0]));
-            console.log(bdate);
             return this.calculateAge(bdate) + ' years';
         } else {
             return '-NA-';
@@ -31,17 +30,11 @@ export default class BdayPerson extends LightningElement {
 
     calculateAge(birthdate) {
         let age = 0;
-        console.log(birthdate);
         if (birthdate) {
-            console.log(
-                ( todayDate.getDate() + " == " + birthdate.getDate() )
-            +"\n"+  ( todayDate.getMonth() + " == " + birthdate.getMonth() )
-            );
             if (
                 ( todayDate.getDate() === birthdate.getDate() )
             &&  ( todayDate.getMonth() === birthdate.getMonth() )
             ) {
-                console.log("here --- " + birthdate);
                 age = todayDate.getFullYear() - birthdate.getFullYear();
             }
         }
@@ -54,5 +47,19 @@ export default class BdayPerson extends LightningElement {
 
     hideIcon() {
         this.iconName = 'action:approval';
+    }
+
+    handleSelection() {
+        this.isSelected = !this.isSelected;
+        const selectionEvent = new CustomEvent(
+            'selection', 
+            {
+                detail: {
+                    recordId: this.bdayIndividualRecord.Id,
+                    isSelected: this.isSelected
+                }
+            }
+        );
+        this.dispatchEvent(selectionEvent);
     }
 }
