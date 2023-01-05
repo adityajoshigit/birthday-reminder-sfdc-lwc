@@ -23,7 +23,7 @@ export default class BirthdayReminder extends LightningElement {
         const selectedNum = Object.entries(this.selectionMap)
                                 .filter(entry => entry[1] ? true : false)
                                 .length;
-        return 'Send Wishes' + (selectedNum ? (' (' + selectedNum + ')') : '');
+        return 'Send Birthday Wishes' + (selectedNum ? (' (' + selectedNum + ')') : '');
     }
 
     @wire(getBirthdayContacts, {bdateString: ''})

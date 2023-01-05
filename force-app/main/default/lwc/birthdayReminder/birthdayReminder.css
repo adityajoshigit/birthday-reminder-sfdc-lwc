@@ -1,3 +1,7 @@
 .contact-img-icon:hover {
     cursor: pointer;
 }
+
+.send-wishes-btn {
+    width: 100%;
+}
