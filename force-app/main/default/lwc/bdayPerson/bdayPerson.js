@@ -11,10 +11,12 @@ export default class BdayPerson extends LightningElement {
     set isSelected(value) {
         this.setAttribute('isSelected', value);
         this._isSelected = value;
+        this.isSelectedChangeHandler(value)
     }
-
-    @track iconName = 'action:user';
+    
     @track _isSelected;
+    @track iconName;
+
 
     get displayName() {
         return (
@@ -57,7 +59,7 @@ export default class BdayPerson extends LightningElement {
     }
 
     handleSelection() {
-        console.log("this._isSelected" + this._isSelected);
+        console.log("this._isSelected before " + this._isSelected);
         this._isSelected = !this._isSelected;
         const selectionEvent = new CustomEvent(
             'selection', 
@@ -71,13 +73,10 @@ export default class BdayPerson extends LightningElement {
             }
         );
         this.dispatchEvent(selectionEvent);
+        console.log("this._isSelected after " + this._isSelected);
+    }
 
-        // let divElem = this.template.querySelector('[data-id="'+ this.bdayIndividualRecord.Id + '"]');
-        
-        // if (this.isSelected) {
-        //     divElem.className = divElem.className + ' selected-styling';
-        // } else {
-        //     divElem.className = divElem.className.replace('selected-styling', '');
-        // }
+    isSelectedChangeHandler(value) {
+        this.iconName = value ? 'action:approval': 'action:user';
     }
 }
