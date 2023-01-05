@@ -1,20 +1,10 @@
 <template>
-    <lightning-card title={header}>
-        <div slot="actions">
-            <!-- <lightning-badge 
-                label={totalBirthdays}
-                class="slds-badge_inverse"
-            ></lightning-badge> -->
-
-            
-            <!-- <lightning-input 
-                type="toggle"
-                message-toggle-active={selectAllLabel}
-                message-toggle-inactive={deselectAllLabel}
-                checked
-            >
-            </lightning-input> -->
-
+    <lightning-card >
+        <div slot="title" >
+            {header}
+            <span class="slds-badge bday-count">{totalBirthdays}</span>
+        </div>
+        <div slot="actions"> 
             <lightning-button-stateful 
                 selected={allSelected}
                 label-when-on={deselectAllLabel}
