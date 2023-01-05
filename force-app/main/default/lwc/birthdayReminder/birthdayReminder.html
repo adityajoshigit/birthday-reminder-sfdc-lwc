@@ -1,20 +1,29 @@
 <template>
     <lightning-card title={header}>
         <div slot="actions">
+            
             <lightning-badge 
                 label={totalBirthdays}
                 class="slds-badge_inverse"
             ></lightning-badge>
+
+            <!-- <lightning-input 
+                type="toggle"
+                message-toggle-active={selectAllLabel}
+                message-toggle-inactive={deselectAllLabel}
+                checked
+            >
+            </lightning-input> -->
         </div>
-        <!-- <lightning-input onkeyup={handleOnKeyUp}></lightning-input> -->
-        <template if:false={todayBdayContacts} >
+        
+        <template if:false={birthdayRecordsList} >
             No Birthdays Today!
         </template>
-        <template if:true={todayBdayContacts} >
+        <template if:true={birthdayRecordsList} >
             <div 
                 class="slds-p-around_xx-small slds-m-around_xx-small slds-grid slds-wrap bday-list-container"
             >
-                <template for:each={todayBdayContacts} for:item="bdayContact">
+                <template for:each={birthdayRecordsList} for:item="bdayContact">
                     <div key={bdayContact.Id} 
                         class="slds-col slds-size_1-of-2 bday-contact-container"
                     >

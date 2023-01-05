@@ -7,11 +7,14 @@ export default class BirthdayReminder extends LightningElement {
     @api baseBirthDate;
     
     @track iconName = 'action:user';
-    @track todayBdayContacts = [];
+    @track birthdayRecordsList = [];
     @track totalBirthdays = 0;
     @track selectionMap = {};
-
+    @track selectedNum = 0;
+    
     TRUE_BOOLEAN = true;
+    selectAllLabel = 'Select All';
+    deselectAllLabel = 'Select None';
 
     get header() {
         return (
@@ -20,10 +23,7 @@ export default class BirthdayReminder extends LightningElement {
     }
 
     get sendBtnLabel() {
-        const selectedNum = Object.entries(this.selectionMap)
-                                .filter(entry => entry[1] ? true : false)
-                                .length;
-        return 'Send Birthday Wishes' + (selectedNum ? (' (' + selectedNum + ')') : '');
+        return 'Send Birthday Wishes' + (this.selectedNum ? (' (' + this.selectedNum + ')') : '');
     }
 
     @wire(getBirthdayContacts, {bdateString: ''})
@@ -31,7 +31,7 @@ export default class BirthdayReminder extends LightningElement {
         if(data) {
             console.log(data);
             data.forEach(bdayPerson => {
-                this.todayBdayContacts.push(bdayPerson);
+                this.birthdayRecordsList.push(bdayPerson);
                 this.selectionMap[bdayPerson.Id] = false;
             });
             this.totalBirthdays = data.length;
@@ -39,7 +39,7 @@ export default class BirthdayReminder extends LightningElement {
     }
 
     // handleOnKeyUp() {
-    //     console.log(this.todayBdayContacts);
+    //     console.log(this.birthdayRecordsList);
     // }
 
     /**
@@ -71,8 +71,34 @@ export default class BirthdayReminder extends LightningElement {
             const recordId = event.detail.data.recordId;
             const isSelected = event.detail.data.isSelected;
             this.selectionMap[recordId] = isSelected;
-            console.log(this.selectionMap);
         }
+        this.calculateSelectedItems();
+        this.setAllOrNoneSelectionLabel();
+    }
+
+    calculateSelectedItems() {
+        if (this.selectionMap) {
+            this.selectedNum = Object.entries(this.selectionMap)
+                                .filter(entry => entry[1] ? true : false)
+                                .length;
+        } else {
+            this.selectedNum = 0;
+        }
+    }
+
+    setAllOrNoneSelectionLabel() {
+        return ( 
+            (this.selectedNum === this.birthdayRecordsList.length) 
+            ? 'Deselect All'
+            : 'Select All' 
+        );
+    }
+
+    markSelectionStatus(idVsStatusMap, newStatus) {
+        Object.keys(idVsStatusMap).forEach(k => {
+            idVsStatusMap[k] = newStatus;
+        });
+        return idVsStatusMap;
     }
 
 }
