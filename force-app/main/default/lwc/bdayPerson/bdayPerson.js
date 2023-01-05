@@ -3,30 +3,35 @@ import { LightningElement, api, track } from 'lwc';
 const todayDate = new Date();
 
 export default class BdayPerson extends LightningElement {
-    @api bdayIndividualRecord;
     @api 
-    get isSelected() {
-        return this._isSelected;
+    get bdayIndividualRecord() {
+        return this._bdayIndividualRecord;
     }
-    set isSelected(value) {
-        this.setAttribute('isSelected', value);
-        this._isSelected = value;
-        this.isSelectedChangeHandler(value)
+    set bdayIndividualRecord(value) {
+        this._bdayIndividualRecord = value;
+        this.setAttribute('bdayIndividualRecord', value);
+        this.setterHandlerBdayIndividualRecord(value);
     }
     
-    @track _isSelected;
-    @track iconName;
+    _bdayIndividualRecord = null;
+    
+    get iconName() {
+        if (this._bdayIndividualRecord) {
+            return this._bdayIndividualRecord.isSelected ? 'action:approval': 'action:user';
+        }
+        return '';
+    }
 
 
     get displayName() {
         return (
-            this.bdayIndividualRecord.FirstName + ' ' + this.bdayIndividualRecord.LastName
+            this._bdayIndividualRecord.FirstName + ' ' + this._bdayIndividualRecord.LastName
         ).trim();
     }
 
     get displayAge() {
-        if (this.bdayIndividualRecord) {
-            let parts = this.bdayIndividualRecord.Birthdate.split('-');
+        if (this._bdayIndividualRecord) {
+            let parts = this._bdayIndividualRecord.Birthdate.split('-');
             let bdate = new Date();
             bdate.setDate(parseInt(parts[2]));
             bdate.setMonth(parseInt(parts[1])-1);
@@ -50,33 +55,24 @@ export default class BdayPerson extends LightningElement {
         return age;
     }
 
-    showIcon() {
-        this.iconName = this._isSelected ? 'action:approval': 'action:user';
-    }
-
-    hideIcon() {
-        this.iconName = 'action:approval';
-    }
-
     handleSelection() {
-        console.log("this._isSelected before " + this._isSelected);
-        this._isSelected = !this._isSelected;
         const selectionEvent = new CustomEvent(
             'selection', 
             {
                 detail: {
                     data: {
-                        recordId: this.bdayIndividualRecord.Id,
-                        isSelected: this._isSelected
+                        recordId: this._bdayIndividualRecord.Id,
+                        isSelected: !this._bdayIndividualRecord.isSelected
                     }
                 }
             }
         );
         this.dispatchEvent(selectionEvent);
-        console.log("this._isSelected after " + this._isSelected);
+        console.log('dispatching selection');
     }
 
-    isSelectedChangeHandler(value) {
-        this.iconName = value ? 'action:approval': 'action:user';
+    setterHandlerBdayIndividualRecord(value) {
+        console.log('in setter handler for rec in person cmp');
+        // this.iconName = value.isSelected ? 'action:approval': 'action:user';
     }
 }

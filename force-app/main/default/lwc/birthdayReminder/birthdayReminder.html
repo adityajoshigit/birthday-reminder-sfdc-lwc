@@ -16,27 +16,30 @@
             </lightning-button-stateful>
         </div>
         
-        <template if:false={birthdayRecordsList} >
-            No Birthdays Today!
-        </template>
-        <template if:true={birthdayRecordsList} >
-            <div 
-                class="slds-p-around_xx-small slds-m-around_xx-small slds-grid slds-wrap bday-list-container"
-            >
-                <template for:each={birthdayRecordsList} for:item="bdayContact">
-                    <div key={bdayContact.Id} 
-                        class="slds-col slds-size_1-of-2 bday-contact-container"
-                    >
-                        <c-bday-person 
-                            is-selected={TRUE_BOOLEAN}
-                            bday-individual-record={bdayContact}
-                            onselection={handleItemSelection}
+        <!-- <template if:true={isLoadedBirthdays}> -->
+
+            <template if:false={birthdayRecordsList} >
+                No Birthdays Today!
+            </template>
+            <template if:true={birthdayRecordsList} >
+                <div 
+                    class="slds-p-around_xx-small slds-m-around_xx-small slds-grid slds-wrap bday-list-container"
+                >
+                    <template for:each={birthdayRecordsList} for:item="bdayContact">
+                        <div key={bdayContact.Id} 
+                            class="slds-col slds-size_1-of-2 bday-contact-container"
                         >
-                        </c-bday-person>
-                    </div>
-                </template>
-            </div>
-        </template>
+                            <c-bday-person 
+                                bday-individual-record={bdayContact}
+                                onselection={handleItemSelection}
+                            >
+                            </c-bday-person>
+                        </div>
+                    </template>
+                </div>
+            </template>
+            
+        <!-- </template> -->
         <div slot="footer"
             class="slds-align_absolute-center"
         >

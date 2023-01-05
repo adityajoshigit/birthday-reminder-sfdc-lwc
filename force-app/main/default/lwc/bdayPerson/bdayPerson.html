@@ -1,28 +1,28 @@
 <template>
-    <div
-        data-id={bdayIndividualRecord.Id}
-        class="slds-m-around_xxx-small slds-p-around_xxx-small bday-item-container"
-    >
-        <lightning-icon 
-            icon-name={iconName} 
-            alternative-text="Item"
-            onmouseover={hideIcon}
-            onmouseleave={showIcon}
-            onclick={handleSelection}
-            class="contact-img-icon"
+    <template if:true={_bdayIndividualRecord}>
+        <div
+            data-id={_bdayIndividualRecord.Id}
+            class="slds-m-around_xxx-small slds-p-around_xxx-small bday-item-container"
         >
-        </lightning-icon>
-        <div class="slds-m-around_xxx-small slds-truncate_container_66 item-details">
-            <div 
-                class="slds-truncate person-name"
+            <lightning-icon 
+                icon-name={iconName} 
+                alternative-text="Item"
+                onclick={handleSelection}
+                class="contact-img-icon"
             >
-                {displayName}
-            </div>
-            <div 
-                class="slds-truncate person-age"
-            >
-                {displayAge}
+            </lightning-icon>
+            <div class="slds-m-around_xxx-small slds-truncate_container_66 item-details">
+                <div 
+                    class="slds-truncate person-name"
+                >
+                    {displayName}
+                </div>
+                <div 
+                    class="slds-truncate person-age"
+                >
+                    {displayAge}
+                </div>
             </div>
         </div>
-    </div>
+    </template>
 </template>
