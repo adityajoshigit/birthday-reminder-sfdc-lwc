@@ -1,12 +1,12 @@
 <template>
     <lightning-card title={header}>
         <div slot="actions">
-            
-            <lightning-badge 
+            <!-- <lightning-badge 
                 label={totalBirthdays}
                 class="slds-badge_inverse"
-            ></lightning-badge>
+            ></lightning-badge> -->
 
+            
             <!-- <lightning-input 
                 type="toggle"
                 message-toggle-active={selectAllLabel}
@@ -14,6 +14,16 @@
                 checked
             >
             </lightning-input> -->
+
+            <lightning-button-stateful 
+                selected={allSelected}
+                label-when-on={deselectAllLabel}
+                label-when-off={selectAllLabel}
+                icon-name-when-off="utility:check"
+                icon-name-when-on="utility:close"
+                onclick={handleAllOrNoneSelection}
+            >
+            </lightning-button-stateful>
         </div>
         
         <template if:false={birthdayRecordsList} >

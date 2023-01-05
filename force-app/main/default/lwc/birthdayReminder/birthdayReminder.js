@@ -11,10 +11,11 @@ export default class BirthdayReminder extends LightningElement {
     @track totalBirthdays = 0;
     @track selectionMap = {};
     @track selectedNum = 0;
+    @track allSelected = false;
     
     TRUE_BOOLEAN = true;
-    selectAllLabel = 'Select All';
-    deselectAllLabel = 'Select None';
+    selectAllLabel = 'All';
+    deselectAllLabel = 'None';
 
     get header() {
         return (
@@ -72,11 +73,11 @@ export default class BirthdayReminder extends LightningElement {
             const isSelected = event.detail.data.isSelected;
             this.selectionMap[recordId] = isSelected;
         }
-        this.calculateSelectedItems();
-        this.setAllOrNoneSelectionLabel();
+        this.evaluateSelectedItems();
+        this.allSelected = (this.selectedNum === this.birthdayRecordsList.length);
     }
 
-    calculateSelectedItems() {
+    evaluateSelectedItems() {
         if (this.selectionMap) {
             this.selectedNum = Object.entries(this.selectionMap)
                                 .filter(entry => entry[1] ? true : false)
@@ -86,12 +87,10 @@ export default class BirthdayReminder extends LightningElement {
         }
     }
 
-    setAllOrNoneSelectionLabel() {
-        return ( 
-            (this.selectedNum === this.birthdayRecordsList.length) 
-            ? 'Deselect All'
-            : 'Select All' 
-        );
+    handleAllOrNoneSelection() {
+        this.allSelected = !this.allSelected;
+        this.markSelectionStatus(this.selectionMap, this.allSelected);
+        this.evaluateSelectedItems();
     }
 
     markSelectionStatus(idVsStatusMap, newStatus) {
