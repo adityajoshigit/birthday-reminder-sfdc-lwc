@@ -12,3 +12,11 @@
     border-radius: 3%;
     border-style: solid;
 }
+
+.bday-item-container {
+    white-space: nowrap; 
+    width: 95%; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    /* border: 1px solid #000000; */
+}

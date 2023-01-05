@@ -8,14 +8,22 @@ export default class BirthdayReminder extends LightningElement {
     
     @track iconName = 'action:user';
     @track todayBdayContacts = [];
+    @track totalBirthdays = 0;
+    @track selectionMap = {};
 
-    selectionMap = {};
-    totalBirthdays = 0;
+    TRUE_BOOLEAN = true;
 
     get header() {
         return (
             (!this.baseBirthDate || this.baseBirthDate.getTime() === todayDate.getTime()) ? 'Today\'s Birthdays' : ('Birthdays on ' + baseBirthDate)
         );
+    }
+
+    get sendBtnLabel() {
+        const selectedNum = Object.entries(this.selectionMap)
+                                .filter(entry => entry[1] ? true : false)
+                                .length;
+        return 'Send Wishes' + (selectedNum ? (' (' + selectedNum + ')') : '');
     }
 
     @wire(getBirthdayContacts, {bdateString: ''})
@@ -26,7 +34,7 @@ export default class BirthdayReminder extends LightningElement {
                 this.todayBdayContacts.push(bdayPerson);
                 this.selectionMap[bdayPerson.Id] = false;
             });
-            totalBirthdays = data.length;
+            this.totalBirthdays = data.length;
         }
     }
 

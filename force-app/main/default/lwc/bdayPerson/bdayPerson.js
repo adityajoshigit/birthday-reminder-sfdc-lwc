@@ -4,10 +4,11 @@ const todayDate = new Date();
 
 export default class BdayPerson extends LightningElement {
     @api bdayIndividualRecord;
+    @api isSelected;
 
     @track iconName = 'action:user';
 
-    isSelected = false;
+    selectionState = this.isSelected ? true : false;
 
     get displayName() {
         return (
@@ -42,7 +43,7 @@ export default class BdayPerson extends LightningElement {
     }
 
     showIcon() {
-        this.iconName = this.isSelected ? 'action:approval': 'action:user';
+        this.iconName = this.selectionState ? 'action:approval': 'action:user';
     }
 
     hideIcon() {
@@ -50,14 +51,15 @@ export default class BdayPerson extends LightningElement {
     }
 
     handleSelection() {
-        this.isSelected = !this.isSelected;
+        console.log("this.selectionState" + this.selectionState);
+        this.selectionState = !this.selectionState;
         const selectionEvent = new CustomEvent(
             'selection', 
             {
                 detail: {
                     data: {
                         recordId: this.bdayIndividualRecord.Id,
-                        isSelected: this.isSelected
+                        isSelected: this.selectionState
                     }
                 }
             }

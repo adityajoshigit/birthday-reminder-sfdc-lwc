@@ -12,13 +12,14 @@
         </template>
         <template if:true={todayBdayContacts} >
             <div 
-                class="slds-p-around_small slds-m-around_small slds-grid slds-wrap bday-list-container"
+                class="slds-p-around_xx-small slds-m-around_xx-small slds-grid slds-wrap bday-list-container"
             >
                 <template for:each={todayBdayContacts} for:item="bdayContact">
                     <div key={bdayContact.Id} 
                         class="slds-col slds-size_1-of-2 bday-contact-container"
                     >
                         <c-bday-person 
+                            is-selected={TRUE_BOOLEAN}
                             bday-individual-record={bdayContact}
                             onselection={handleItemSelection}
                         >
@@ -27,5 +28,12 @@
                 </template>
             </div>
         </template>
+        <div slot="footer"
+            class="slds-align_absolute-center"
+        >
+            <button class="slds-button slds-button_brand">
+                {sendBtnLabel}
+            </button>
+        </div>
     </lightning-card>
 </template>
