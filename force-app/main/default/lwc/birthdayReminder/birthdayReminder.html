@@ -4,24 +4,30 @@
             {header}
             <span class="slds-badge bday-count">{totalBirthdays}</span>
         </div>
-        <div slot="actions"> 
-            <lightning-button-stateful 
-                selected={allSelected}
-                label-when-on={deselectAllLabel}
-                label-when-off={selectAllLabel}
-                icon-name-when-off="utility:check"
-                icon-name-when-on="utility:close"
-                onclick={handleAllOrNoneSelection}
-            >
-            </lightning-button-stateful>
-        </div>
+        <template if:false={noBdaysFound}>
+            <div slot="actions"> 
+                <lightning-button-stateful 
+                    selected={allSelected}
+                    label-when-on={deselectAllLabel}
+                    label-when-off={selectAllLabel}
+                    icon-name-when-off="utility:check"
+                    icon-name-when-on="utility:close"
+                    onclick={handleAllOrNoneSelection}
+                >
+                </lightning-button-stateful>
+            </div>
+        </template>
         
         <!-- <template if:true={isLoadedBirthdays}> -->
 
-            <template if:false={birthdayRecordsList} >
-                No Birthdays Today!
+            <template if:true={noBdaysFound} >
+                <div 
+                    class="slds-p-around_small slds-m-around_xx-small slds-grid slds-wrap slds-align_absolute-center no-records-msg-div "
+                >
+                    No Birthdays Today!
+                </div>
             </template>
-            <template if:true={birthdayRecordsList} >
+            <template if:false={noBdaysFound} >
                 <div 
                     class="slds-p-around_xx-small slds-m-around_xx-small slds-grid slds-wrap bday-list-container"
                 >
@@ -39,13 +45,14 @@
                 </div>
             </template>
             
-        <!-- </template> -->
-        <div slot="footer"
-            class="slds-align_absolute-center"
-        >
-            <button class="slds-button slds-button_brand send-wishes-btn">
-                {sendBtnLabel}
-            </button>
-        </div>
+        <template if:false={noBdaysFound}>
+            <div slot="footer"
+                class="slds-align_absolute-center"
+            >
+                <button class="slds-button slds-button_brand send-wishes-btn">
+                    {sendBtnLabel}
+                </button>
+            </div>
+        </template>
     </lightning-card>
 </template>

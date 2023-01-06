@@ -15,6 +15,15 @@ export default class BirthdayReminder extends LightningElement {
     selectAllLabel = 'All';
     deselectAllLabel = 'None';
 
+    get noBdaysFound() {
+        if (this.birthdayRecordsList) {
+            return this.birthdayRecordsList.length > 0 ? false : true;
+        }
+        else {
+            return true;
+        }
+    }
+
     get header() {
         return (
             (!this.baseBirthDate || this.baseBirthDate.getTime() === todayDate.getTime()) ? 'Today\'s Birthdays' : ('Birthdays on ' + baseBirthDate)
