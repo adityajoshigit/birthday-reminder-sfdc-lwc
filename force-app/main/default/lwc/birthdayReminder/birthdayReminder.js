@@ -155,5 +155,12 @@ export default class BirthdayReminder extends LightningElement {
         return true;
     }
 
+    showToast(title, msg) {
+        const event = new ShowToastEvent({
+            title: title,
+            message: msg
+        });
+        this.dispatchEvent(event);
+    }
 
 }
