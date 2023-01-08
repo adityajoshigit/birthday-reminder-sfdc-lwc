@@ -33,9 +33,12 @@ public with sharing class BirthdayReminderUtility {
                     )
                 );
             }
-            Database.update(lstContacts, false);
+            update lstContacts;
         } catch (Exception e) {
-            
+            insert new Log__c(
+                Description__c = e.getMessage() + '\n' + e.getLineNumber()
+                
+            );
             return false;
         }
         return true;

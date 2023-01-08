@@ -97,13 +97,15 @@ export default class BdayPerson extends LightningElement {
         
         // create recordInput object and attach fields obj into it
         const recordInput = { fields };
-
+        console.log('here b4 updating');
         updateRecord(recordInput)
         .then(res => {
+            console.log(res);
             this.processing = false;
             this.notifyParentAboutEmail();
         })
         .catch(err => {
+            console.log(err);
             this.processing = false;
         });
 
