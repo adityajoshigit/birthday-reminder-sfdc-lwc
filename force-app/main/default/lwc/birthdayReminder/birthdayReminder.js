@@ -51,7 +51,7 @@ export default class BirthdayReminder extends LightningElement {
                     {
                         ...bdayPerson, 
                         isSelected: !this.TRUE_BOOLEAN,
-                        wishesSent: !this.TRUE_BOOLEAN
+                        wishesSent: bdayPerson.Birthday_Wishes_Sent__c
                     }
                 );
             });
