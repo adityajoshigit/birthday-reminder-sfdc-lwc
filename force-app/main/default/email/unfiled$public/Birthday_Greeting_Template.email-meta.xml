@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <available>true</available>
+    <description>This email is sent as a result of send birthday wishes functionality.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Birthday Greeting Template</name>
+    <style>none</style>
+    <subject>Happy Birthday!</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,22 @@
+<messaging:emailTemplate 
+    subject="Happy Birthday, {!relatedTo.FirstName}!" 
+    recipientType="Contact" 
+    relatedToType="Contact"
+>
+    <messaging:htmlEmailBody >
+        Hey {!relatedTo.FirstName},
+        <br/> 
+        <br/> 
+        Many Many Many Happy Returns of the Day! May God Always Bless You with all the Good Luck and Huge Success in Life! 
+        <br/> 
+        <br/> 
+        Happy Birthday to you!!
+        
+        <br/> 
+        <br/> 
+        Best Regards,
+        
+        <br/>
+        Salesforce Support Team 
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

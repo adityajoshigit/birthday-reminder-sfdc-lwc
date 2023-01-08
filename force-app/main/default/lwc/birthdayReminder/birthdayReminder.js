@@ -10,10 +10,12 @@ export default class BirthdayReminder extends LightningElement {
     @track totalBirthdays = 0;
     @track isLoadedBirthdays = false;
     @track allSelected = false;
+    @track processing = true;
 
     TRUE_BOOLEAN = true;
     selectAllLabel = 'All';
     deselectAllLabel = 'None';
+
 
     get noBdaysFound() {
         if (this.birthdayRecordsList) {
@@ -31,7 +33,11 @@ export default class BirthdayReminder extends LightningElement {
     }
 
     get sendBtnLabel() {
-        return 'Send Birthday Wishes';
+        let label = 'Send Birthday Wishes';
+        const count = (this.birthdayRecordsList) 
+                        ? this.birthdayRecordsList.filter(rec => (rec.isSelected && !rec.wishesSent)).length
+                        : 0;
+        return count ? (label + ' (' + count + ')' ) : label;
     }
 
     @wire(getBirthdayContacts, {bdateString: ''})
@@ -40,11 +46,16 @@ export default class BirthdayReminder extends LightningElement {
             console.log(data);
             data.forEach((bdayPerson) => {
                 this.birthdayRecordsList.push(
-                    {...bdayPerson, isSelected: !this.TRUE_BOOLEAN}
+                    {
+                        ...bdayPerson, 
+                        isSelected: !this.TRUE_BOOLEAN,
+                        wishesSent: !this.TRUE_BOOLEAN
+                    }
                 );
             });
             this.totalBirthdays = data.length;
         }
+        this.processing = false;
     }
 
     calculateAge(birthdate) {
@@ -58,7 +69,8 @@ export default class BirthdayReminder extends LightningElement {
         return age;
     }
 
-    handleItemSelection(event) {
+    onSelection(event) {
+        this.processing = true;
         console.log('received selection');
         if(event.detail.data) {
             const evtRecordId = event.detail.data.recordId;
@@ -70,13 +82,32 @@ export default class BirthdayReminder extends LightningElement {
             });
         }
         this.allSelected = this.checkIfAllSelected();
+        this.processing = false;
     }
 
     handleAllOrNoneSelection() {
+        console.log('here===');
         this.allSelected = !this.allSelected;
         this.birthdayRecordsList.forEach((birthdayRecord) => {
             birthdayRecord.isSelected = this.allSelected;
         });
+        console.log('at the end===');
+    }
+
+    handleSendBdayWish(event) {
+
+    }
+
+    onBdayEmailSent(event) {
+        if (event && event.detail && event.data) {
+            const _recId = event.detail.data.recordId;
+            const _wishesSent = event.detail.data.wishesSent;
+            this.birthdayRecordsList.forEach(rec => {
+                if (rec.Id === _recId) {
+                    rec.wishesSent = _wishesSent;
+                }
+            });
+        }
     }
 
     checkIfAllSelected() {

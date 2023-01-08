@@ -4,22 +4,26 @@
             {header}
             <span class="slds-badge bday-count">{totalBirthdays}</span>
         </div>
-        <template if:false={noBdaysFound}>
-            <div slot="actions"> 
-                <lightning-button-stateful 
-                    selected={allSelected}
-                    label-when-on={deselectAllLabel}
-                    label-when-off={selectAllLabel}
-                    icon-name-when-off="utility:check"
-                    icon-name-when-on="utility:close"
-                    onclick={handleAllOrNoneSelection}
-                >
-                </lightning-button-stateful>
-            </div>
-        </template>
-        
-        <!-- <template if:true={isLoadedBirthdays}> -->
 
+        <template if:true={processing}>
+            <lightning-spinner variant="brand" size="small"></lightning-spinner>    
+        </template>
+
+        <template if:false={processing}>
+            <template if:false={noBdaysFound}>
+                <div slot="actions"> 
+                    <lightning-button-stateful 
+                        selected={allSelected}
+                        label-when-on={deselectAllLabel}
+                        label-when-off={selectAllLabel}
+                        icon-name-when-off="utility:check"
+                        icon-name-when-on="utility:close"
+                        onclick={handleAllOrNoneSelection}
+                    >
+                    </lightning-button-stateful>
+                </div>
+            </template>
+            
             <template if:true={noBdaysFound} >
                 <div 
                     class="slds-p-around_small slds-m-around_xx-small slds-grid slds-wrap slds-align_absolute-center no-records-msg-div "
@@ -29,30 +33,35 @@
             </template>
             <template if:false={noBdaysFound} >
                 <div 
-                    class="slds-p-around_xx-small slds-m-around_xx-small slds-grid slds-wrap bday-list-container"
+                    class="slds-p-around_x-small slds-m-left_x-small slds-m-top_x-small slds-grid slds-wrap bday-list-container"
                 >
                     <template for:each={birthdayRecordsList} for:item="bdayContact">
                         <div key={bdayContact.Id} 
-                            class="slds-col slds-size_1-of-2 bday-contact-container"
+                            class="slds-col slds-size_1-of-1 bday-contact-container"
                         >
                             <c-bday-person 
                                 bday-individual-record={bdayContact}
-                                onselection={handleItemSelection}
+                                onselection={onSelection}
+                                onbdayemailsent={onBdayEmailSent}
                             >
                             </c-bday-person>
                         </div>
                     </template>
                 </div>
             </template>
+            <!-- <template if:false={noBdaysFound}> -->
+                <div slot="footer"
+                    class="slds-align_absolute-center"
+                >
+                    <button 
+                        class="slds-button slds-button_brand send-wishes-btn"
+                        onclick={handleSendBdayWish}
+                    >
+                        {sendBtnLabel}
+                    </button>
+                </div>
+            <!-- </template> -->
             
-        <template if:false={noBdaysFound}>
-            <div slot="footer"
-                class="slds-align_absolute-center"
-            >
-                <button class="slds-button slds-button_brand send-wishes-btn">
-                    {sendBtnLabel}
-                </button>
-            </div>
-        </template>
+    </template>
     </lightning-card>
 </template>
