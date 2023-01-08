@@ -10,7 +10,8 @@ public with sharing class BirthdayReminderUtility {
                 Id, 
                 FirstName,
                 LastName,
-                Birthdate
+                Birthdate,
+                Birthday_Wishes_Sent__c
             FROM 
                 Contact
             WHERE 
