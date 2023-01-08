@@ -9,7 +9,7 @@ export default class BdayPerson extends LightningElement {
     _bdayIndividualRecord = null;
     
     @track toolTipText = '';
-    @track wishesSent = false;
+    
     @track processing = false;
 
     @api 
@@ -24,9 +24,16 @@ export default class BdayPerson extends LightningElement {
     
     get iconName() {
         if (this._bdayIndividualRecord) {
-            return (this._bdayIndividualRecord.isSelected && !this.wishesSent) ? 'action:approval': 'action:user';
+            return (this._bdayIndividualRecord.isSelected && !this._bdayIndividualRecord.wishesSent) ? 'action:approval': 'action:user';
         }
         return '';
+    }
+
+    get wishesSent() {
+        if (this._bdayIndividualRecord) {
+            return this._bdayIndividualRecord.wishesSent;
+        }
+        return false;
     }
 
 
@@ -50,7 +57,7 @@ export default class BdayPerson extends LightningElement {
     }
 
     get displayToolTipOnIcon() {
-        if (this.wishesSent) {
+        if (this._bdayIndividualRecord.wishesSent) {
             return 'Sent Birthday Wishes Already!';
         }
         return 'Click to send birthday wishes';
@@ -59,7 +66,7 @@ export default class BdayPerson extends LightningElement {
 
     handleSelection() {
         this.processing = true;
-        if (!this.wishesSent) {
+        if (!this._bdayIndividualRecord.wishesSent) {
             const selectionEvent = new CustomEvent(
                 'selection', 
                 {
@@ -93,7 +100,6 @@ export default class BdayPerson extends LightningElement {
 
         updateRecord(recordInput)
         .then(res => {
-            this.wishesSent = true;
             this.processing = false;
             this.notifyParentAboutEmail();
         })
@@ -106,6 +112,7 @@ export default class BdayPerson extends LightningElement {
     
 
     notifyParentAboutEmail() {
+        console.log('-0-0-0-');
         const emailSentNotification = new CustomEvent(
             'bdayemailsent',
             {
@@ -118,6 +125,7 @@ export default class BdayPerson extends LightningElement {
             }
         );
         this.dispatchEvent(emailSentNotification);
+        console.log('/*/*/*');
     }
 
     calculateAge(birthdate) {

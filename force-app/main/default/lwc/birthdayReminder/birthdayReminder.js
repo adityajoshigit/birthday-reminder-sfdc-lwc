@@ -1,5 +1,6 @@
 import { LightningElement, wire, track, api } from 'lwc';
 import getBirthdayContacts from '@salesforce/apex/BirthdayReminderUtility.getBirthdayContacts';
+import sendBirthdayEmail from '@salesforce/apex/BirthdayReminderUtility.sendBirthdayEmail';
 
 const todayDate = new Date();
 
@@ -98,19 +99,51 @@ export default class BirthdayReminder extends LightningElement {
     }
 
     handleSendBdayWish(event) {
+        this.processing = true;
+        const ids = [];
+        this.birthdayRecordsList.forEach(rec => {
+            if (rec.Id && rec.isSelected && !rec.wishesSent) {
+                ids.push(rec.Id);
+            }
+        });
+
+        if (ids.length) {
+            sendBirthdayEmail({ 'lstIds' : ids })
+                .then(res => {
+                    console.log('res = ' + res);
+                    this.processing = false;
+                    this.birthdayRecordsList.forEach(rec => {
+                        if (rec.isSelected) {
+                            rec.isSelected = false;
+                            rec.wishesSent = true;
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                    this.processing = false;
+                });
+        } else {
+            console.log('nothing to update');
+            this.processing = false;
+        }
 
     }
 
     onBdayEmailSent(event) {
-        if (event && event.detail && event.data) {
+        this.processing = true;
+        if (event && event.detail && event.detail.data) {
             const _recId = event.detail.data.recordId;
             const _wishesSent = event.detail.data.wishesSent;
             this.birthdayRecordsList.forEach(rec => {
                 if (rec.Id === _recId) {
+                    console.log('rec.Id = ' + rec.Id);
+                    console.log('rec.wishesSent = ' + _wishesSent);
                     rec.wishesSent = _wishesSent;
                 }
             });
         }
+        this.processing = false;
     }
 
     checkIfAllSelected() {

@@ -34,7 +34,7 @@
                 </div>
                 <div class="slds-col slds-size_5-of-12">
                     <div class="slds-float_right bday-wish-btn-container">
-                        <template if:true={wishesSent}>
+                        <template if:true={_bdayIndividualRecord.wishesSent}>
                             <lightning-icon 
                                 icon-name="standard:endorsement"
                                 alternative-text="Sent"
@@ -42,7 +42,7 @@
                                 size="small"
                             ></lightning-icon>
                         </template>
-                        <template if:false={wishesSent}>
+                        <template if:false={_bdayIndividualRecord.wishesSent}>
                             <lightning-button-stateful 
                                 icon-name-when-off="utility:magicwand"
                                 label-when-on="Sent Wishes"
