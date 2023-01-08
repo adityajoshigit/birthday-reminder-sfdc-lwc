@@ -42,6 +42,7 @@ export default class BirthdayReminder extends LightningElement {
 
     @wire(getBirthdayContacts, {bdateString: ''})
     wiredGetBirthdayContacts({error, data}) {
+        this.processing = true;
         if(data) {
             console.log(data);
             data.forEach((bdayPerson) => {
@@ -89,7 +90,9 @@ export default class BirthdayReminder extends LightningElement {
         console.log('here===');
         this.allSelected = !this.allSelected;
         this.birthdayRecordsList.forEach((birthdayRecord) => {
-            birthdayRecord.isSelected = this.allSelected;
+            if (!birthdayRecord.wishesSent) {
+                birthdayRecord.isSelected = this.allSelected;
+            }
         });
         console.log('at the end===');
     }

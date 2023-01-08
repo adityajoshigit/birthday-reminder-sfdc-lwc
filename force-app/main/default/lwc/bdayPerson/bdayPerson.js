@@ -10,7 +10,7 @@ export default class BdayPerson extends LightningElement {
     
     @track toolTipText = '';
     @track wishesSent = false;
-    
+    @track processing = false;
 
     @api 
     get bdayIndividualRecord() {
@@ -58,6 +58,7 @@ export default class BdayPerson extends LightningElement {
 
 
     handleSelection() {
+        this.processing = true;
         if (!this.wishesSent) {
             const selectionEvent = new CustomEvent(
                 'selection', 
@@ -73,6 +74,7 @@ export default class BdayPerson extends LightningElement {
             this.dispatchEvent(selectionEvent);
             console.log('dispatching selection');
         }
+        this.processing = false;
     }
 
     handleSendIndividualBirthdayEmail(event) {
@@ -80,6 +82,7 @@ export default class BdayPerson extends LightningElement {
     }
 
     updateRecordToSendEmail() {
+        this.processing = true;
         // set all (desired) field values
         const fields = {};
         fields[CONTACT_ID_FIELD.fieldApiName] = this._bdayIndividualRecord.Id;
@@ -90,11 +93,13 @@ export default class BdayPerson extends LightningElement {
 
         updateRecord(recordInput)
         .then(res => {
-            console.log(res);
             this.wishesSent = true;
+            this.processing = false;
             this.notifyParentAboutEmail();
         })
-        .catch();
+        .catch(err => {
+            this.processing = false;
+        });
 
     }
 

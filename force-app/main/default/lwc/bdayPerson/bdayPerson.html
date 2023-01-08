@@ -1,55 +1,61 @@
 <template>
-    <template if:true={_bdayIndividualRecord}>
-        <div
-            data-id={_bdayIndividualRecord.Id}
-            class="slds-m-around_xx-small slds-p-around_xx-small slds-grid bday-item-container"
-        >
-            <div class="slds-col slds-size_2-of-12">
-                <lightning-icon 
-                    icon-name={iconName} 
-                    alternative-text="Item"
-                    onclick={handleSelection}
-                    class="contact-img-icon"
-                    title={displayToolTipOnIcon}
-                >
-                </lightning-icon>
-            </div>
-            <div class="slds-col slds-size_5-of-12 slds-truncate_container_66">
-                <div class="slds-m-around_xx-small slds-truncate  item-details">
-                    <div 
-                        class=" person-name"
-                    >
-                        {displayName}
-                    </div>
-                    <div 
-                        class=" person-age"
-                    >
-                        {displayAge}
-                    </div>
-                </div>
-            </div>
-            <div class="slds-col slds-size_5-of-12">
-                <div class="slds-float_right bday-wish-btn-container">
-                    <template if:true={wishesSent}>
-                        <lightning-icon 
-                            icon-name="standard:endorsement"
-                            alternative-text="Sent"
-                            title="Sent Birthday Wishes!"
-                            size="small"
-                        ></lightning-icon>
-                    </template>
-                    <template if:false={wishesSent}>
-                        <lightning-button-stateful 
-                            icon-name-when-off="utility:magicwand"
-                            label-when-on="Sent Wishes"
-                            label-when-off="Send Wishes"
-                            variant="brand"
-                            onclick={handleSendIndividualBirthdayEmail}
-                        ></lightning-button-stateful>
-                    </template>
-                </div>
-            </div>
-            
-        </div>
+    <template if:true={processing}>
+        <lightning-spinner variant="brand" size="small"></lightning-spinner>    
     </template>
+
+        <template if:true={_bdayIndividualRecord}>
+            <div
+                data-id={_bdayIndividualRecord.Id}
+                class="slds-m-around_xx-small slds-p-around_xx-small slds-grid bday-item-container"
+            >
+                <div class="slds-col slds-size_2-of-12">
+                    <lightning-icon 
+                        icon-name={iconName} 
+                        alternative-text="Item"
+                        onclick={handleSelection}
+                        class="contact-img-icon"
+                        title={displayToolTipOnIcon}
+                    >
+                    </lightning-icon>
+                </div>
+                <div class="slds-col slds-size_5-of-12 slds-truncate_container_66">
+                    <div class="slds-m-around_xx-small slds-truncate  item-details">
+                        <div 
+                            class=" person-name"
+                        >
+                            {displayName}
+                        </div>
+                        <div 
+                            class=" person-age"
+                        >
+                            {displayAge}
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_5-of-12">
+                    <div class="slds-float_right bday-wish-btn-container">
+                        <template if:true={wishesSent}>
+                            <lightning-icon 
+                                icon-name="standard:endorsement"
+                                alternative-text="Sent"
+                                title="Sent Birthday Wishes!"
+                                size="small"
+                            ></lightning-icon>
+                        </template>
+                        <template if:false={wishesSent}>
+                            <lightning-button-stateful 
+                                icon-name-when-off="utility:magicwand"
+                                label-when-on="Sent Wishes"
+                                label-when-off="Send Wishes"
+                                variant="brand"
+                                onclick={handleSendIndividualBirthdayEmail}
+                            ></lightning-button-stateful>
+                        </template>
+                    </div>
+                </div>
+                
+            </div>
+    </template>
+
+    
 </template>

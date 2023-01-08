@@ -19,4 +19,24 @@ public with sharing class BirthdayReminderUtility {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    @AuraEnabled
+    public static boolean sendBirthdayEmail(List<String> lstIds){
+        try {
+            List<Contact> lstContacts = new List<Contact>();
+            for (String strId : lstIds) {
+                lstContacts.add(
+                    new Contact(
+                        Id = strId,
+                        Send_Birthday_Wishes__c = true
+                    )
+                );
+            }
+            Database.update(lstContacts, false);
+        } catch (Exception e) {
+            
+            return false;
+        }
+        return true;
+    }
 }
